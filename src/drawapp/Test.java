@@ -102,6 +102,7 @@ public class Test extends Application {
         primaryStage.setTitle("Draw App");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
     }
 
    
