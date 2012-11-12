@@ -1,5 +1,6 @@
 package drawapp;
 
+import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -20,11 +21,13 @@ public class ImageScene {
     private Scene scene;
     private Group group;
     private Color colour;
+    private ArrayList<Group> elements;
     
     public ImageScene(Scene scene){
         this.scene= scene;
         this.group= new Group();
         this.colour=Color.BLACK;
+        elements = new ArrayList<>();
     }
     
     public Scene getScene(){
@@ -33,6 +36,10 @@ public class ImageScene {
     
     public Group getGroup(){
         return group;
+    }
+    
+    public ArrayList<Group> getElements(){
+        return elements;
     }
     
     public void setBackgroundColour(Color colour){
@@ -52,7 +59,10 @@ public class ImageScene {
                 .endX(x2)
                 .endY(y2)
                 .build();
-        group.getChildren().add(line);
+         Group save = new Group();
+         save.getChildren().add(line);
+         elements.add(save);
+         group.getChildren().add(line);
     }
     
      public void drawRect(int x1, int y1, int x2, int y2){
@@ -64,6 +74,9 @@ public class ImageScene {
                  .width(x2)
                  .height(y2)
                  .build();
+         Group save = new Group();
+         save.getChildren().add(rectangle);
+         elements.add(save);
          group.getChildren().add(rectangle);
      }
      
@@ -76,6 +89,9 @@ public class ImageScene {
                  .width(x2)
                  .height(y2)
                  .build();
+         Group save = new Group();
+         save.getChildren().add(rectangle);
+         elements.add(save);
          group.getChildren().add(rectangle);
      }
      
@@ -88,6 +104,9 @@ public class ImageScene {
                  .stroke(colour)
                  .text(s)
                  .build();
+         Group save = new Group();
+         save.getChildren().add(text);
+         elements.add(save);
          group.getChildren().add(text);
      }
      
@@ -102,6 +121,9 @@ public class ImageScene {
                  .radiusY(height)
                  .length(arcAngle)
                  .build();
+         Group save = new Group();
+         save.getChildren().add(arc);
+         elements.add(save);
          group.getChildren().add(arc);
      }
      
@@ -113,6 +135,9 @@ public class ImageScene {
                  .radiusX(width)
                  .radiusY(height)
                  .build();
+         Group save = new Group();
+         save.getChildren().add(ellipse);
+         elements.add(save);
          group.getChildren().add(ellipse);
      }
     

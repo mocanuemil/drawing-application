@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 
@@ -53,6 +55,8 @@ public class Parser
       textArea.setTranslateY(400);
       image.getGroup().getChildren().add(textArea);
   }
+  
+  
 
   private void parseLine(String line) throws ParseException
   {
