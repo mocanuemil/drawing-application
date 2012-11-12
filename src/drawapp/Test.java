@@ -12,9 +12,12 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.LineBuilder;
 import javafx.stage.Stage;
 
 /**
@@ -52,16 +55,24 @@ public class Test extends Application {
         btn2.setTranslateY(300);
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void  handle(ActionEvent event) {
                 group.setVisible(false);
-                for (Iterator<Group> it = image.getElements().iterator(); it.hasNext();) {
-                    try {
-                        Group g = it.next();
-                        group2.getChildren().add(g);
-                        Thread.currentThread().sleep(1500);
-                    } catch (InterruptedException ex) {
-                        System.out.println("InterruptException");
+                group2.setVisible(true);
+                
+                for (Iterator<Node> it = group1.getChildren().iterator(); it.hasNext();) {
+                    //try {
+                        Group g =new Group();
+                        if(it.hasNext()) {
+                        g.getChildren().add(it.next());
                     }
+                        else {
+                            break;
+                        }
+                        group2.getChildren().add(g);
+                        //Thread.currentThread().sleep(1000);
+                    //} //catch (InterruptedException ex) {
+                        //System.out.println("InterruptException");
+                   // }
                 }
                 
             }
@@ -78,6 +89,8 @@ public class Test extends Application {
         parser.parse();
         group1=image.getGroup();
         group1.setVisible(false);
+        group2.setVisible(false);
+        
         
         group.getChildren().add(btn1);
         group.getChildren().add(btn2);
