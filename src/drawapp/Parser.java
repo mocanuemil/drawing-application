@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import javafx.scene.Node;
+import javafx.scene.control.TextArea;
 
 public class Parser
 {
@@ -22,6 +24,11 @@ public class Parser
 
   public void parse()
   {
+     TextArea textArea = new TextArea();
+        textArea.setPrefRowCount(10);
+        textArea.setPrefColumnCount(500);
+        textArea.setWrapText(true);
+        textArea.setPrefWidth(500);
     try
     {
       String line = reader.readLine();
@@ -33,15 +40,18 @@ public class Parser
     }
     catch (IOException e)
     {
-      System.out.println("IOException");
+      textArea.setText("IOException");
       return;
     }
     catch (ParseException e)
     {
-      System.out.println("Parse Exception: " + e.getMessage());
+      textArea.setText("Parse Exception: " + e.getMessage());
       return;
     }
-    System.out.println("Drawing completed");
+      textArea.setText("Drawing completed");
+      textArea.setTranslateX(0);
+      textArea.setTranslateY(400);
+      image.getGroup().getChildren().add(textArea);
   }
 
   private void parseLine(String line) throws ParseException
