@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -18,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -37,6 +36,16 @@ public class Test extends Application {
     private ImageScene image;
     private Scene scene;
     private Reader reader;
+    
+    
+    private java.awt.image.BufferedImage convertToAwtImage(javafx.scene.image.Image fxImage) {
+                if (Image.impl_isExternalFormatSupported(BufferedImage.class)) {
+                        java.awt.image.BufferedImage awtImage = new BufferedImage((int)fxImage.getWidth(), (int)fxImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                        return (BufferedImage)fxImage.impl_toExternalImage(awtImage);
+                } else {
+                        return null;
+                }
+        }
     
     @Override
     public void start(Stage primaryStage) {
@@ -96,8 +105,7 @@ public class Test extends Application {
             public void  handle(ActionEvent event) {
                 
                WritableImage snapshot = scene.snapshot(null);
-               BufferedImage img = null;
-               SwingFXUtils.fromFXImage(snapshot, img);
+               BufferedImage img = convertToAwtImage(snapshot);
                File outputfile = new File("saved.png");
                 try {
                     ImageIO.write(img, "png", outputfile);
