@@ -1,9 +1,15 @@
 package drawapp;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,9 +18,11 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -57,7 +65,7 @@ public class Test extends Application {
         });
         
         Button btn2 = new Button();
-        btn2.setText("Draw Step by Step");
+        btn2.setText("Step by Step");
         btn2.setPrefSize(100, 20);
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -80,6 +88,26 @@ public class Test extends Application {
             }
         });
         
+         Button btn3 = new Button();
+        btn3.setText("Save as image");
+        btn3.setPrefSize(100, 20);
+        btn3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void  handle(ActionEvent event) {
+                
+               WritableImage snapshot = scene.snapshot(null);
+               BufferedImage img = null;
+               SwingFXUtils.fromFXImage(snapshot, img);
+               File outputfile = new File("saved.png");
+                try {
+                    ImageIO.write(img, "png", outputfile);
+                } catch (IOException ex) {
+                   System.out.println("Image Exception");
+                }
+                
+            }
+        });
+        
        
         root.setPrefHeight(600);
         root.setPrefWidth(600);
@@ -87,7 +115,7 @@ public class Test extends Application {
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(30);
         hbox.setAlignment(Pos.CENTER);
-        hbox.getChildren().addAll(btn1,btn2);
+        hbox.getChildren().addAll(btn1,btn2,btn3);
         root.setTop(hbox);
         
         scene = new Scene(root, 600, 600);
