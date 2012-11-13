@@ -54,7 +54,6 @@ public class Test extends Application {
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               image = new ImageScene(scene);
                Parser1 parser = new Parser1(reader,scene,group1);
                parser.parse();
                 
