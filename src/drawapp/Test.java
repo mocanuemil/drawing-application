@@ -7,7 +7,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import javafx.application.Application;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -56,18 +55,18 @@ public class Test extends Application {
             @Override
             public void handle(ActionEvent event) {
                image = new ImageScene(scene);
-               Parser parser = new Parser(reader,image);
+               Parser1 parser = new Parser1(reader,scene,group1);
                parser.parse();
                 
-               ArrayList<Node> elements = image.getElements();
+              /* ArrayList<Node> elements = image.getElements();
                for (Node g :elements) {
                   if(g == null){
                       System.out.println("gol");
                   }
                   group1.getChildren().add(g);
-               }  
+               }*/  
                root.setCenter(group1);
-               root.setBottom(image.getText());
+               //root.setBottom(image.getText());
                 
                 
             }
@@ -79,7 +78,6 @@ public class Test extends Application {
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void  handle(ActionEvent event) {
-                
                 image = new ImageScene(scene);
                 Parser parser = new Parser(reader,image);
                 parser.parse();
