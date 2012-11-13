@@ -53,14 +53,16 @@ public class Parser
       textArea.setText("Drawing completed");
       textArea.setTranslateX(0);
       textArea.setTranslateY(400);
-      image.getGroup().getChildren().add(textArea);
+      image.getElements().add(textArea);
   }
   
   
 
   private void parseLine(String line) throws ParseException
   {
-    if (line.length() < 2) return;
+    if (line.length() < 2) {
+          return;
+      }
     String command = line.substring(0, 2);
     if (command.equals("DL")) { drawLine(line.substring(2,line.length())); return; }
     if (command.equals("DR")) { drawRect(line.substring(2, line.length())); return; }
@@ -69,10 +71,11 @@ public class Parser
     if (command.equals("DS")) { drawString(line.substring(3, line.length())); return; }
     if (command.equals("DA")) { drawArc(line.substring(2, line.length())); return; }
     if (command.equals("DO")) { drawOval(line.substring(2, line.length())); return; }
-     if (command.equals("SB")) { setBackgroundColour(line.substring(3, line.length())); return; }
+    if (command.equals("SB")) { setBackgroundColour(line.substring(3, line.length())); return; }
+    if (command.equals("DI")) { drawImage(line.substring(2,line.length())); return; }
 
 
-    throw new ParseException("Unknown drawing command");
+    throw new ParseException("Unknown drawing command in :"+line);
   }
   
   private void setBackgroundColour(String colourName) throws ParseException{
@@ -89,10 +92,10 @@ public class Parser
     if (colourName.equals("red")) { image.setBackgroundColour(Color.RED); return;}
     if (colourName.equals("white")) { image.setBackgroundColour(Color.WHITE); return;}
     if (colourName.equals("yellow")) { image.setBackgroundColour(Color.YELLOW); return;}
-    throw new ParseException("Invalid colour name");
+    throw new ParseException("Invalid colour name " + colourName);
   }
-
-  private void drawLine(String args) throws ParseException
+  
+   private void drawLine(String args) throws ParseException
   {
     int x1 = 0;
     int y1 = 0;
@@ -100,11 +103,32 @@ public class Parser
     int y2 = 0;
 
     StringTokenizer tokenizer = new StringTokenizer(args);
-    x1 = getInteger(tokenizer);
-    y1 = getInteger(tokenizer);
-    x2 = getInteger(tokenizer);
-    y2 = getInteger(tokenizer);
+    x1 = getInteger(tokenizer,args);
+    y1 = getInteger(tokenizer,args);
+    x2 = getInteger(tokenizer,args);
+    y2 = getInteger(tokenizer,args);
     image.drawLine(x1,y1,x2,y2);
+  }
+
+  private void drawImage(String args) throws ParseException
+  {
+    int x1 = 0;
+    int y1 = 0;
+    int x2 = 0;
+    int y2 = 0;
+
+    StringTokenizer tokenizer = new StringTokenizer(args);
+    x1 = getInteger(tokenizer,args);
+    y1 = getInteger(tokenizer,args);
+    x2 = getInteger(tokenizer,args);
+    y2 = getInteger(tokenizer,args);
+    String s="";
+    int position = args.indexOf("@");
+    if (position == -1) {
+          throw new ParseException("Image path string is missing");
+      }
+    s = args.substring(position+1,args.length());
+    image.drawImage(x1,y1,x2,y2,s);
   }
 
   private void drawRect(String args) throws ParseException
@@ -115,10 +139,10 @@ public class Parser
     int y2 = 0;
 
     StringTokenizer tokenizer = new StringTokenizer(args);
-    x1 = getInteger(tokenizer);
-    y1 = getInteger(tokenizer);
-    x2 = getInteger(tokenizer);
-    y2 = getInteger(tokenizer);
+    x1 = getInteger(tokenizer,args);
+    y1 = getInteger(tokenizer,args);
+    x2 = getInteger(tokenizer,args);
+    y2 = getInteger(tokenizer,args);
     image.drawRect(x1, y1, x2, y2);
   }
 
@@ -130,10 +154,10 @@ public class Parser
     int y2 = 0;
 
     StringTokenizer tokenizer = new StringTokenizer(args);
-    x1 = getInteger(tokenizer);
-    y1 = getInteger(tokenizer);
-    x2 = getInteger(tokenizer);
-    y2 = getInteger(tokenizer);
+    x1 = getInteger(tokenizer,args);
+    y1 = getInteger(tokenizer,args);
+    x2 = getInteger(tokenizer,args);
+    y2 = getInteger(tokenizer,args);
     image.fillRect(x1, y1, x2, y2);
   }
 
@@ -147,12 +171,12 @@ public class Parser
     int arcAngle = 0;
 
     StringTokenizer tokenizer = new StringTokenizer(args);
-    x = getInteger(tokenizer);
-    y = getInteger(tokenizer);
-    width = getInteger(tokenizer);
-    height = getInteger(tokenizer);
-    startAngle = getInteger(tokenizer);
-    arcAngle = getInteger(tokenizer);
+    x = getInteger(tokenizer,args);
+    y = getInteger(tokenizer,args);
+    width = getInteger(tokenizer,args);
+    height = getInteger(tokenizer,args);
+    startAngle = getInteger(tokenizer,args);
+    arcAngle = getInteger(tokenizer,args);
     image.drawArc(x, y, width, height, startAngle, arcAngle);
   }
 
@@ -164,10 +188,10 @@ public class Parser
     int height = 0;
 
     StringTokenizer tokenizer = new StringTokenizer(args);
-    x1 = getInteger(tokenizer);
-    y1 = getInteger(tokenizer);
-    width = getInteger(tokenizer);
-    height = getInteger(tokenizer);
+    x1 = getInteger(tokenizer,args);
+    y1 = getInteger(tokenizer,args);
+    width = getInteger(tokenizer,args);
+    height = getInteger(tokenizer,args);
     image.drawOval(x1, y1, width, height);
   }
 
@@ -177,8 +201,8 @@ public class Parser
     int y = 0 ;
     String s = "";
     StringTokenizer tokenizer = new StringTokenizer(args);
-    x = getInteger(tokenizer);
-    y = getInteger(tokenizer);
+    x = getInteger(tokenizer,args);
+    y = getInteger(tokenizer,args);
     int position = args.indexOf("@");
     if (position == -1) {
           throw new ParseException("DrawString string is missing");
@@ -205,13 +229,13 @@ public class Parser
     throw new ParseException("Invalid colour name");
   }
 
-  private int getInteger(StringTokenizer tokenizer) throws ParseException
+  private int getInteger(StringTokenizer tokenizer,String line) throws ParseException
   {
     if (tokenizer.hasMoreTokens()) {
           return Integer.parseInt(tokenizer.nextToken());
       }
     else {
-          throw new ParseException("Missing Integer value");
+          throw new ParseException("Missing Integer value in " + line);
       }
   }
 }

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,23 +58,14 @@ public class Test extends Application {
             @Override
             public void  handle(ActionEvent event) {
                 group.setVisible(false);
-                group2.setVisible(true);
-                
-                for (Iterator<Node> it = group1.getChildren().iterator(); it.hasNext();) {
-                    //try {
-                        Group g =new Group();
-                        if(it.hasNext()) {
-                        g.getChildren().add(it.next());
-                    }
-                        else {
-                            break;
-                        }
-                        group2.getChildren().add(g);
-                        //Thread.currentThread().sleep(1000);
-                    //} //catch (InterruptedException ex) {
-                        //System.out.println("InterruptException");
-                   // }
+                ArrayList<Node> elements = image.getElements();
+                for (Node g :elements) {
+                if(g == null){
+                System.out.println("gol");
                 }
+                group2.getChildren().add(g);
+                }
+               
                 
             }
         });
@@ -82,14 +74,21 @@ public class Test extends Application {
         
         scene = new Scene(root, 500, 500);
         String eol = System.getProperty("line.separator");
-        reader = new StringReader("SB yellow"+eol+"DA 150 200 70 50 30 50" + eol +"SC blue" + eol +"FR 50 50 30 30"+eol+"DS 300 300 @Pana Mea");
+        reader = new StringReader("SB yellow"+eol+"DA 150 200 70 50 30 50" + eol +"SC blue" + eol +"FR 50 50 30 30"+eol+"DS 300 300 @Pana Mea"+eol+"DI 200 200 50 50 @http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg");
         
         image = new ImageScene(scene);
         Parser parser = new Parser(reader,image);
         parser.parse();
-        group1=image.getGroup();
         group1.setVisible(false);
-        group2.setVisible(false);
+        
+        //System.out.println(image.getElements().size());
+        ArrayList<Node> elements = image.getElements();
+        for (Node g :elements) {
+            if(g == null){
+                System.out.println("gol");
+            }
+            group1.getChildren().add(g);
+        }
         
         
         group.getChildren().add(btn1);

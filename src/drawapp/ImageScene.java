@@ -5,6 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcBuilder;
 import javafx.scene.shape.EllipseBuilder;
@@ -19,13 +21,11 @@ import javafx.scene.text.TextBuilder;
  */
 public class ImageScene {
     private Scene scene;
-    private Group group;
     private Color colour;
-    private ArrayList<Group> elements;
+    private ArrayList<Node> elements;
     
     public ImageScene(Scene scene){
         this.scene= scene;
-        this.group= new Group();
         this.colour=Color.BLACK;
         elements = new ArrayList<>();
     }
@@ -34,11 +34,8 @@ public class ImageScene {
         return scene;
     }
     
-    public Group getGroup(){
-        return group;
-    }
     
-    public ArrayList<Group> getElements(){
+    public ArrayList<Node> getElements(){
         return elements;
     }
     
@@ -50,6 +47,17 @@ public class ImageScene {
         this.colour=colour;
     }
     
+    public void drawImage(int x1, int y1, int x2, int y2,String path){
+        Image image = new Image(path);
+        ImageView img= new ImageView();
+        img.setImage(image);
+        img.setFitWidth(x2);
+        img.setFitHeight(y2);
+        img.setTranslateX(x1);
+        img.setTranslateY(y1);
+        elements.add(img);
+    }
+    
     public void drawLine(int x1, int y1, int x2, int y2){
         Node line= LineBuilder.create()
                 .stroke(colour)
@@ -59,10 +67,7 @@ public class ImageScene {
                 .endX(x2)
                 .endY(y2)
                 .build();
-         Group save = new Group();
-         save.getChildren().add(line);
-         elements.add(save);
-         group.getChildren().add(line);
+         elements.add(line);
     }
     
      public void drawRect(int x1, int y1, int x2, int y2){
@@ -74,10 +79,7 @@ public class ImageScene {
                  .width(x2)
                  .height(y2)
                  .build();
-         Group save = new Group();
-         save.getChildren().add(rectangle);
-         elements.add(save);
-         group.getChildren().add(rectangle);
+         elements.add(rectangle);
      }
      
      public void fillRect(int x1, int y1, int x2, int y2){
@@ -89,10 +91,7 @@ public class ImageScene {
                  .width(x2)
                  .height(y2)
                  .build();
-         Group save = new Group();
-         save.getChildren().add(rectangle);
-         elements.add(save);
-         group.getChildren().add(rectangle);
+         elements.add(rectangle);
      }
      
      public void drawString(int x,int y, String s){
@@ -104,10 +103,7 @@ public class ImageScene {
                  .stroke(colour)
                  .text(s)
                  .build();
-         Group save = new Group();
-         save.getChildren().add(text);
-         elements.add(save);
-         group.getChildren().add(text);
+         elements.add(text);
      }
      
      public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle){
@@ -121,10 +117,7 @@ public class ImageScene {
                  .radiusY(height)
                  .length(arcAngle)
                  .build();
-         Group save = new Group();
-         save.getChildren().add(arc);
-         elements.add(save);
-         group.getChildren().add(arc);
+         elements.add(arc);
      }
      
      public void drawOval(int x, int y, int width, int height){
@@ -135,10 +128,7 @@ public class ImageScene {
                  .radiusX(width)
                  .radiusY(height)
                  .build();
-         Group save = new Group();
-         save.getChildren().add(ellipse);
-         elements.add(save);
-         group.getChildren().add(ellipse);
+         elements.add(ellipse);
      }
     
 }
