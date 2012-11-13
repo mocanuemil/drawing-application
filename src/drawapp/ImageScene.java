@@ -1,9 +1,7 @@
 package drawapp;
 
 import java.util.ArrayList;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +20,7 @@ import javafx.scene.text.TextBuilder;
 public class ImageScene {
     private Scene scene;
     private Color colour;
+    private Node text;
     private ArrayList<Node> elements;
     
     public ImageScene(Scene scene){
@@ -34,6 +33,13 @@ public class ImageScene {
         return scene;
     }
     
+    public Node getText(){
+        return text;
+    }
+    
+    public void setText(Node text){
+        this.text=text;
+    }
     
     public ArrayList<Node> getElements(){
         return elements;

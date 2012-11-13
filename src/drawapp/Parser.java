@@ -4,11 +4,7 @@ import javafx.scene.paint.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 
 public class Parser
@@ -51,9 +47,7 @@ public class Parser
       return;
     }
       textArea.setText("Drawing completed");
-      textArea.setTranslateX(0);
-      textArea.setTranslateY(400);
-      image.getElements().add(textArea);
+      image.setText(textArea);
   }
   
   
