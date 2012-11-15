@@ -7,16 +7,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -31,14 +27,13 @@ import javax.imageio.ImageIO;
  *
  * @author geo
  */
-public class Test extends Application {
+public class Main extends Application {
     
     private BorderPane root = new BorderPane();
     private TextA textArea = new TextA();
     private HBox hbox = new HBox();
     private Group group1=new Group();
     private Color stepColour=Color.BLACK;
-    private ImageScene image;
     private Scene scene;
     private Reader reader;
     private int commandNr=0;
