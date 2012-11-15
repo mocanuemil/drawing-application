@@ -1,11 +1,15 @@
 package drawapp;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
@@ -29,12 +34,15 @@ import javax.imageio.ImageIO;
 public class Test extends Application {
     
     private BorderPane root = new BorderPane();
+    private TextA textArea = new TextA();
     private HBox hbox = new HBox();
     private Group group1=new Group();
-    private Group group2=new Group();
+    private Color stepColour=Color.BLACK;
     private ImageScene image;
     private Scene scene;
     private Reader reader;
+    private int commandNr=0;
+    private ArrayList<String> commands=new ArrayList<>();
     
     
     private java.awt.image.BufferedImage convertToAwtImage(javafx.scene.image.Image fxImage) {
@@ -54,18 +62,10 @@ public class Test extends Application {
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               Parser1 parser = new Parser1(reader,scene,group1);
+               Parser1 parser = new Parser1(commands,scene,group1,textArea);
                parser.parse();
-                
-              /* ArrayList<Node> elements = image.getElements();
-               for (Node g :elements) {
-                  if(g == null){
-                      System.out.println("gol");
-                  }
-                  group1.getChildren().add(g);
-               }*/  
+             
                root.setCenter(group1);
-               //root.setBottom(image.getText());
                 
                 
             }
@@ -77,19 +77,21 @@ public class Test extends Application {
         btn2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void  handle(ActionEvent event) {
-                image = new ImageScene(scene);
-                Parser parser = new Parser(reader,image);
-                parser.parse();
                 
-                ArrayList<Node> elements = image.getElements();
-                for (Node g :elements) {
-                if(g == null){
-                System.out.println("gol");
+                System.out.println(commandNr);  
+                
+                Parser1 parser = new Parser1(commands,scene,group1,textArea,stepColour);
+                
+                if(commandNr<commands.size()){
+                parser.parseLineStep(commandNr);
+                stepColour=parser.getColor();
+                commandNr++;
+                
+                root.setCenter(group1);
                 }
-                group2.getChildren().add(g);
+                if (commandNr== commands.size()){
+                    textArea.Text("Drawing Completed!");
                 }
-                root.setCenter(group2);
-                root.setBottom(image.getText());
                 
             }
         });
@@ -122,12 +124,21 @@ public class Test extends Application {
         hbox.setAlignment(Pos.CENTER);
         hbox.getChildren().addAll(btn1,btn2,btn3);
         root.setTop(hbox);
+        root.setBottom(textArea.getTextArea());
         
         scene = new Scene(root, 600, 600);
         String eol = System.getProperty("line.separator");
         reader = new StringReader("SB yellow"+eol+"DA 150 200 70 50 30 50" + eol +"SC blue" + eol +"FR 50 50 30 30"+eol+"DS 300 300 @Pana Mea"+eol+"DI 200 200 50 50 @http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg");
-        
-        
+        BufferedReader read = new BufferedReader(reader);
+        try {
+            String line =read.readLine();
+            while(line!=null){
+                if(line!=null)commands.add(line);  
+                line=read.readLine();
+            }
+        } catch (IOException ex) {
+            System.out.println("{IOException");
+        }
  
         primaryStage.setTitle("Draw App");
         primaryStage.setScene(scene);

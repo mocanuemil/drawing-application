@@ -4,7 +4,10 @@ import javafx.scene.paint.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -20,56 +23,76 @@ import javafx.scene.text.TextBuilder;
 
 public class Parser1
 {
-  private BufferedReader reader;
+  private ArrayList<String> commands;
   private Scene scene;
   private Group group;
   private Color colour;
- 
+  private TextA textArea;
 
-  public Parser1(Reader reader,Scene scene,Group group)
+
+  public Parser1(ArrayList<String> commands,Scene scene,Group group,TextA textArea)
   {
-    this.reader = new BufferedReader(reader);
+    this.commands = commands;
     this.scene = scene;
     this.group = group;
+    this.textArea = textArea;
     this.colour=Color.BLACK;
     
+  }
+  
+  public Parser1(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Color colour){
+    this.commands = commands;
+    this.scene = scene;
+    this.group = group;
+    this.textArea = textArea;
+    this.colour=colour;
   }
 
   public void parse()
   {
-     TextArea textArea = new TextArea();
-        textArea.setPrefRowCount(10);
-        textArea.setPrefColumnCount(500);
-        textArea.setWrapText(true);
-        textArea.setPrefWidth(500);
+      int i=0;
     try
     {
-      String line = reader.readLine();
-      while (line != null)
+      String line=" ";
+      while ((line != null) && (i<commands.size()))
       {
-        parseLine(line);
-        line = reader.readLine();
+        line=commands.get(i);
+        if(line!=null)parseLine(line);
+        i++;
       }
     }
-    catch (IOException e)
-    {
-      textArea.setText("IOException");
-      return;
-    }
+    
     catch (ParseException e)
     {
-      textArea.setText("Parse Exception: " + e.getMessage());
+      textArea.Text("Parse Exception: " + e.getMessage());
       return;
     }
-      textArea.setText("Drawing completed");
+      textArea.Text("Drawing completed");
       
+  }
+  
+  public Color getColor(){
+      return colour;
   }
   
   public Group getGroup(){
       return group;
   }
   
-  
+  public void parseLineStep(int i){
+        try {
+            String line=commands.get(i);
+            System.out.println(line);
+            if((line != null) && i<commands.size()) {
+                parseLine(line);
+            }
+        } 
+        catch(ParseException e){
+            textArea.Text("Parse Exception: " + e.getMessage());
+            return;
+        }
+      
+  }
 
   private void parseLine(String line) throws ParseException
   {
