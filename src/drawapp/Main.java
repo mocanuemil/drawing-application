@@ -57,7 +57,7 @@ public class Main extends Application {
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               Parser1 parser = new Parser1(commands,scene,group1,textArea);
+               Parser parser = new Parser(commands,scene,group1,textArea);
                parser.parse();
              
                root.setCenter(group1);
@@ -75,7 +75,7 @@ public class Main extends Application {
                 
                 System.out.println(commandNr);  
                 
-                Parser1 parser = new Parser1(commands,scene,group1,textArea,stepColour);
+                Parser parser = new Parser(commands,scene,group1,textArea,stepColour);
                 
                 if(commandNr<commands.size()){
                 parser.parseLineStep(commandNr);

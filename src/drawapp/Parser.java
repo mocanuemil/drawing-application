@@ -21,7 +21,7 @@ import javafx.scene.shape.RectangleBuilder;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextBuilder;
 
-public class Parser1
+public class Parser
 {
   private ArrayList<String> commands;
   private Scene scene;
@@ -30,7 +30,7 @@ public class Parser1
   private TextA textArea;
 
 
-  public Parser1(ArrayList<String> commands,Scene scene,Group group,TextA textArea)
+  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea)
   {
     this.commands = commands;
     this.scene = scene;
@@ -40,7 +40,7 @@ public class Parser1
     
   }
   
-  public Parser1(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Color colour){
+  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Color colour){
     this.commands = commands;
     this.scene = scene;
     this.group = group;
