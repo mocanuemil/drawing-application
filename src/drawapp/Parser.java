@@ -1,5 +1,10 @@
 package drawapp;
 
+/**
+ *
+ * @author Mocanu Emil George
+ */
+
 import javafx.scene.paint.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.ArcBuilder;
 import javafx.scene.shape.EllipseBuilder;
 import javafx.scene.shape.LineBuilder;
@@ -26,7 +33,7 @@ public class Parser
   private ArrayList<String> commands;
   private Scene scene;
   private Group group;
-  private Color colour;
+  private Paint paint;
   private TextA textArea;
 
 
@@ -36,16 +43,16 @@ public class Parser
     this.scene = scene;
     this.group = group;
     this.textArea = textArea;
-    this.colour=Color.BLACK;
+    this.paint=Color.BLACK;
     
   }
   
-  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Color colour){
+  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Paint paint){
     this.commands = commands;
     this.scene = scene;
     this.group = group;
     this.textArea = textArea;
-    this.colour=colour;
+    this.paint=paint;
   }
 
   public void parse()
@@ -71,8 +78,8 @@ public class Parser
       
   }
   
-  public Color getColor(){
-      return colour;
+  public Paint getPaint(){
+      return paint;
   }
   
   public Group getGroup(){
@@ -109,6 +116,7 @@ public class Parser
     if (command.equals("DO")) { drawOval(line.substring(2, line.length())); return; }
     if (command.equals("SB")) { setBackgroundColour(line.substring(3, line.length())); return; }
     if (command.equals("DI")) { drawImage(line.substring(2,line.length())); return; }
+    if (command.equals("SI")) { setImagePattern(line.substring(3,line.length())); return; }
 
 
     throw new ParseException("Unknown drawing command in :"+line);
@@ -249,19 +257,19 @@ public class Parser
 
   private void setColour(String colourName) throws ParseException
   {
-    if (colourName.equals("black")) { this.colour=Color.BLACK; return;}
-    if (colourName.equals("blue")) { this.colour=Color.BLUE; return;}
-    if (colourName.equals("cyan")) { this.colour=Color.CYAN; return;}
-    if (colourName.equals("darkgray")) { this.colour=Color.DARKGRAY; return;}
-    if (colourName.equals("gray")) { this.colour=Color.GRAY; return;}
-    if (colourName.equals("green")) { this.colour=Color.GREEN; return;}
-    if (colourName.equals("lightgray")) { this.colour=Color.LIGHTGRAY; return;}
-    if (colourName.equals("magenta")) { this.colour=Color.MAGENTA; return;}
-    if (colourName.equals("orange")) { this.colour=Color.ORANGE; return;}
-    if (colourName.equals("pink")) { this.colour=Color.PINK; return;}
-    if (colourName.equals("red")) { this.colour=Color.RED; return;}
-    if (colourName.equals("white")) { this.colour=Color.WHITE; return;}
-    if (colourName.equals("yellow")) { this.colour=Color.YELLOW; return;}
+    if (colourName.equals("black")) { this.paint=Color.BLACK; return;}
+    if (colourName.equals("blue")) { this.paint=Color.BLUE; return;}
+    if (colourName.equals("cyan")) { this.paint=Color.CYAN; return;}
+    if (colourName.equals("darkgray")) { this.paint=Color.DARKGRAY; return;}
+    if (colourName.equals("gray")) { this.paint=Color.GRAY; return;}
+    if (colourName.equals("green")) { this.paint=Color.GREEN; return;}
+    if (colourName.equals("lightgray")) { this.paint=Color.LIGHTGRAY; return;}
+    if (colourName.equals("magenta")) { this.paint=Color.MAGENTA; return;}
+    if (colourName.equals("orange")) { this.paint=Color.ORANGE; return;}
+    if (colourName.equals("pink")) { this.paint=Color.PINK; return;}
+    if (colourName.equals("red")) { this.paint=Color.RED; return;}
+    if (colourName.equals("white")) { this.paint=Color.WHITE; return;}
+    if (colourName.equals("yellow")) { this.paint=Color.YELLOW; return;}
     throw new ParseException("Invalid colour name");
   }
 
@@ -280,7 +288,7 @@ public class Parser
     }
     
     public void setColour(Color colour){
-        this.colour=colour;
+        this.paint=colour;
     }
     
     public void drawImage(int x1, int y1, int x2, int y2,String path){
@@ -294,9 +302,14 @@ public class Parser
         group.getChildren().add(img);
     }
     
+     public void setImagePattern(String path){
+        Image image = new Image(path);
+        paint=new ImagePattern(image);
+    }
+    
     public void drawLine(int x1, int y1, int x2, int y2){
         Node line= LineBuilder.create()
-                .stroke(colour)
+                .stroke(paint)
                 .fill(Color.TRANSPARENT)
                 .startX(x1)
                 .startY(y1)
@@ -308,7 +321,7 @@ public class Parser
     
      public void drawRect(int x1, int y1, int x2, int y2){
          Node rectangle= RectangleBuilder.create()
-                 .stroke(colour)
+                 .stroke(paint)
                  .fill(Color.TRANSPARENT)
                  .x(x1)
                  .y(y1)
@@ -320,8 +333,8 @@ public class Parser
      
      public void fillRect(int x1, int y1, int x2, int y2){
          Node rectangle= RectangleBuilder.create()
-                 .stroke(colour)
-                 .fill(colour)
+                 .stroke(paint)
+                 .fill(paint)
                  .x(x1)
                  .y(y1)
                  .width(x2)
@@ -336,7 +349,7 @@ public class Parser
                  .font(new Font(16))
                  .x(x)
                  .y(y)
-                 .stroke(colour)
+                 .stroke(paint)
                  .text(s)
                  .build();
          group.getChildren().add(text);
@@ -344,7 +357,7 @@ public class Parser
      
      public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle){
          Node arc= ArcBuilder.create()
-                 .stroke(colour)
+                 .stroke(paint)
                  .fill(Color.TRANSPARENT)
                  .centerX(x)
                  .centerY(y)
@@ -358,7 +371,7 @@ public class Parser
      
      public void drawOval(int x, int y, int width, int height){
          Node ellipse= EllipseBuilder.create()
-                 .stroke(colour)
+                 .stroke(paint)
                  .centerX(x)
                  .centerY(y)
                  .radiusX(width)

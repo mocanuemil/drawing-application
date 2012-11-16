@@ -1,5 +1,10 @@
 package drawapp;
 
+/**
+ *
+ * @author Mocanu Emil George
+ */
+
 public class ParseException extends Exception
 {
   public ParseException()

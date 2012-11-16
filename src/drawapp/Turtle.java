@@ -2,7 +2,7 @@ package drawapp;
 
 /**
  *
- * @author geo
+ * @author Mocanu Emil George
  */
 public class Turtle {
     private int x;

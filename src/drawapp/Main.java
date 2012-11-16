@@ -20,12 +20,13 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 /**
  *
- * @author geo
+ * @author Mocanu Emil George
  */
 public class Main extends Application {
     
@@ -33,7 +34,7 @@ public class Main extends Application {
     private TextA textArea = new TextA();
     private HBox hbox = new HBox();
     private Group group1=new Group();
-    private Color stepColour=Color.BLACK;
+    private Paint stepPaint=Color.BLACK;
     private Scene scene;
     private Reader reader;
     private int commandNr=0;
@@ -75,11 +76,11 @@ public class Main extends Application {
                 
                 System.out.println(commandNr);  
                 
-                Parser parser = new Parser(commands,scene,group1,textArea,stepColour);
+                Parser parser = new Parser(commands,scene,group1,textArea,stepPaint);
                 
                 if(commandNr<commands.size()){
                 parser.parseLineStep(commandNr);
-                stepColour=parser.getColor();
+                stepPaint=parser.getPaint();
                 commandNr++;
                 
                 root.setCenter(group1);
@@ -123,8 +124,9 @@ public class Main extends Application {
         
         scene = new Scene(root, 600, 600);
         String eol = System.getProperty("line.separator");
-        reader = new StringReader("SB yellow"+eol+"DA 150 200 70 50 30 50" + eol +"SC blue" + eol +"FR 50 50 30 30"+eol+"DS 300 300 @Pana Mea"+eol+"DI 200 200 50 50 @http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg");
+        reader = new StringReader("SB yellow"+eol+"DA 150 200 70 50 30 50" + eol +"SI http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg" + eol +"FR 50 50 30 30"+eol+"DS 300 300 @Pana Mea"+eol+"DI 200 200 50 50 @http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg");
         BufferedReader read = new BufferedReader(reader);
+       
         try {
             String line =read.readLine();
             while(line!=null){

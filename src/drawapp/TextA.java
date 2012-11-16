@@ -4,7 +4,7 @@ import javafx.scene.control.TextArea;
 
 /**
  *
- * @author geo
+ * @author Mocanu Emil George
  */
 public class TextA {
     private TextArea textArea;
