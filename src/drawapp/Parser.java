@@ -35,24 +35,27 @@ public class Parser
   private Group group;
   private Paint paint;
   private TextA textArea;
+  private Turtle turtle;
 
 
-  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea)
+  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Turtle turtle)
   {
     this.commands = commands;
     this.scene = scene;
     this.group = group;
     this.textArea = textArea;
     this.paint=Color.BLACK;
+    this.turtle=turtle;
     
   }
   
-  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Paint paint){
+  public Parser(ArrayList<String> commands,Scene scene,Group group,TextA textArea,Turtle turtle,Paint paint){
     this.commands = commands;
     this.scene = scene;
     this.group = group;
     this.textArea = textArea;
     this.paint=paint;
+    this.turtle=turtle;
   }
 
   public void parse()
@@ -117,6 +120,10 @@ public class Parser
     if (command.equals("SB")) { setBackgroundColour(line.substring(3, line.length())); return; }
     if (command.equals("DI")) { drawImage(line.substring(2,line.length())); return; }
     if (command.equals("SI")) { setImagePattern(line.substring(3,line.length())); return; }
+    if (command.equals("ST")) { setTurtle(line.substring(2,line.length())); return; }
+    if (command.equals("TL")) { turtleLeft(line.substring(2,line.length())); return; }
+    if (command.equals("TR")) { turtleRight(line.substring(2,line.length())); return; }
+    if (command.equals("TF")) { turtleForward(line.substring(2,line.length())); return; }
 
 
     throw new ParseException("Unknown drawing command in :"+line);
@@ -238,6 +245,42 @@ public class Parser
     height = getInteger(tokenizer,args);
     drawOval(x1, y1, width, height);
   }
+  
+  private void setTurtle(String args) throws ParseException{
+      double x = 0;
+      double y = 0;
+      int angle;
+      
+      StringTokenizer tokenizer = new StringTokenizer(args);
+      x=getInteger(tokenizer,args);
+      y=getInteger(tokenizer,args);
+      angle=getInteger(tokenizer,args);
+      setTurtle(x,y,angle);
+    }
+  
+  private void turtleLeft(String args) throws ParseException{
+      int angle;
+      
+      StringTokenizer tokenizer = new StringTokenizer(args);
+      angle=getInteger(tokenizer,args);
+      turtleLeft(angle);
+    }
+  
+  private void turtleRight(String args) throws ParseException{
+      int angle;
+      
+      StringTokenizer tokenizer = new StringTokenizer(args);
+      angle=getInteger(tokenizer,args);
+      turtleRight(angle);
+    }
+  
+   private void turtleForward(String args) throws ParseException{
+      int distance;
+      
+      StringTokenizer tokenizer = new StringTokenizer(args);
+      distance=getInteger(tokenizer,args);
+      turtleForward(distance);
+    }
 
   private void drawString(String args) throws ParseException
   {
@@ -379,6 +422,26 @@ public class Parser
                  .build();
          group.getChildren().add(ellipse);
      }
+     
+     public void setTurtle(double x, double y, int angle){
+         turtle=new Turtle(x,y,angle);
+     }
+     
+     public void turtleLeft(int angle){
+         turtle.turnLeft(angle);
+     }
+     
+     public void turtleRight(int angle){
+         turtle.turnRight(angle);
+     }
+      
+      public void turtleForward(int dist){
+         int x1=(int) turtle.getX();
+         int y1=(int) turtle.getY();
+         turtle.forward(dist);
+         int x2=(int) turtle.getX();
+         int y2=(int) turtle.getY();
+         drawLine(x1,y1,x2,y2);
+     }
     
-
 }
