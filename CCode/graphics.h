@@ -8,6 +8,11 @@ void drawArc(int,int,int,int,int,int);
 void fillRect(int,int,int,int);
 void drawString(char*,int,int);
 void drawImage(char*,int,int,int,int);
+void setTurtle(int,int);
+void turtleLeft(int);
+void turtleRight(int);
+void turtleForward(int);
+void resize(int,int);
 
 void setColour(colour);
 void setBackgroundColour(colour);
