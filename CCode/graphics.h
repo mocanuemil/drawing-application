@@ -1,3 +1,6 @@
+#ifndef graphics 
+#define graphics
+
 enum colour {black,blue,cyan,darkgray,gray,green,lightgray,magenta,orange,pink,red,white,yellow};
 typedef enum colour colour;
 
@@ -16,3 +19,5 @@ void turtleForward(int);
 void setColour(colour);
 void setBackgroundColour(colour);
 void setImagePattern(char*);
+
+#endif 

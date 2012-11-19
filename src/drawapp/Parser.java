@@ -417,7 +417,7 @@ public class Parser
      
      public void drawOval(int x, int y, int width, int height){
          Node ellipse= EllipseBuilder.create()
-                 .stroke(paint)
+                 .fill(paint)
                  .centerX(x)
                  .centerY(y)
                  .radiusX(width)

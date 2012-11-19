@@ -97,5 +97,5 @@ void setBackgroundColour(colour c)
 }
 
 void setImagePattern(char* s){
-    printf("SI %s\n",x,y,s);
+    printf("SI %s\n",s);
 }

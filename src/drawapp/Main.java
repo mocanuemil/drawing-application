@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -71,7 +72,8 @@ public class Main extends Application {
         
         scene = new Scene(root, 600, 600);
         String eol = System.getProperty("line.separator");
-        reader = new StringReader("SB yellow"+eol+"DA 150 200 70 50 30 50" + eol +"SI http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg" + eol +"FR 50 50 30 30"+eol+"DS 300 300 @Pana Mea"+eol+"DI 200 200 50 50 @http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg");
+        reader = new InputStreamReader(System.in);
+        //reader = new StringReader("SB yellow"+eol+"DA 150 200 70 50 30 50" + eol +"SI http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg" + eol +"FR 50 50 30 30"+eol+"DS 300 300 @Pana Mea"+eol+"DI 200 200 50 50 @http://www.robots.ox.ac.uk/~vgg/research/flowers_demo/images/flower_4.jpg");
         //reader = new StringReader("ST 100 100 0"+eol+"TL 50"+eol+"TF 100"+eol+"TR 30"+eol+"TF 50");
         BufferedReader read = new BufferedReader(reader);
        
