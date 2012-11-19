@@ -33,10 +33,10 @@ void drawString(char* s, int x, int y)
 
 void drawImage(char* s,int x1, int x2, int x3, int x4)
 {
-  printf("DI %i %i %i %i @%s\n", x1, x2, x3, x4);
+  printf("DI %i %i %i %i @%s\n", x1, x2, x3, x4, s);
 }
 
-void SetTurtle(int x,int y,int angle){
+void setTurtle(int x,int y,int angle){
     printf("ST %i %i %i\n", x, y, angle);
 }
 
@@ -49,7 +49,7 @@ void turtleRight(int angle){
 }
 
 void turtleForward(int dist){
-    printf("TF %i",dist);
+    printf("TF %i\n",dist);
 }
 
 void setColour(colour c)

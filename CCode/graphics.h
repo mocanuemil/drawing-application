@@ -11,7 +11,7 @@ void drawArc(int,int,int,int,int,int);
 void fillRect(int,int,int,int);
 void drawString(char*,int,int);
 void drawImage(char*,int,int,int,int);
-void setTurtle(int,int);
+void setTurtle(int,int,int);
 void turtleLeft(int);
 void turtleRight(int);
 void turtleForward(int);
