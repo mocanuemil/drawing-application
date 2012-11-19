@@ -15,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
@@ -104,7 +105,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                Parser parser = new Parser(commands,scene,group1,textArea,turtle);
                parser.parse();
-             
+              
                root.setCenter(group1);
                 
                 

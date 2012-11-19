@@ -12,7 +12,6 @@ void setTurtle(int,int);
 void turtleLeft(int);
 void turtleRight(int);
 void turtleForward(int);
-void resize(int,int);
 
 void setColour(colour);
 void setBackgroundColour(colour);

@@ -129,6 +129,8 @@ public class Parser
     throw new ParseException("Unknown drawing command in :"+line);
   }
   
+ 
+  
   private void setBackgroundColour(String colourName) throws ParseException{
     if (colourName.equals("black")) { setBackgroundColour(Color.BLACK); return;}
     if (colourName.equals("blue")) { setBackgroundColour(Color.BLUE); return;}
@@ -329,7 +331,8 @@ public class Parser
    public void setBackgroundColour(Color colour){
         scene.setFill(colour);
     }
-    
+   
+   
     public void setColour(Color colour){
         this.paint=colour;
     }
